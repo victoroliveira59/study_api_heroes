@@ -6,5 +6,5 @@
   <%= link_to "Edit this hero", edit_hero_path(@hero) %> |
   <%= link_to "Back to heros", heros_path %>
 
-  <%= button_to "Destroy this hero", @hero, method: :delete %>
+  <%= button_to "Destroy this hero", @hero, method: :delete, data: {turbo_confirm: "Are you sure?"}%>
 </div>

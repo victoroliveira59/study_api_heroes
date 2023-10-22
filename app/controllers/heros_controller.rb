@@ -1,5 +1,10 @@
+# frozen_string_literal: true
+
 class HerosController < ApplicationController
-  before_action :set_hero, only: %i[ show edit update destroy ]
+  http_basic_authenticate_with name: Rails.application.credentials.authenticate[:name],
+                               password: Rails.application.credentials.authenticate[:password],
+                               except: %i[index show]
+  before_action :set_hero, only: %i[show edit update destroy]
 
   # GET /heros or /heros.json
   def index
@@ -7,8 +12,7 @@ class HerosController < ApplicationController
   end
 
   # GET /heros/1 or /heros/1.json
-  def show
-  end
+  def show; end
 
   # GET /heros/new
   def new
@@ -16,8 +20,7 @@ class HerosController < ApplicationController
   end
 
   # GET /heros/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /heros or /heros.json
   def create
@@ -25,7 +28,7 @@ class HerosController < ApplicationController
 
     respond_to do |format|
       if @hero.save
-        format.html { redirect_to heros_url, notice: "Hero was successfully created." }
+        format.html { redirect_to heros_url, notice: 'Hero was successfully created.' }
         format.json { render :show, status: :created, location: @hero }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -38,7 +41,7 @@ class HerosController < ApplicationController
   def update
     respond_to do |format|
       if @hero.update(hero_params)
-        format.html { redirect_to heros_url, notice: "Hero was successfully updated." }
+        format.html { redirect_to heros_url, notice: 'Hero was successfully updated.' }
         format.json { render :show, status: :ok, location: @hero }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -52,19 +55,20 @@ class HerosController < ApplicationController
     @hero.destroy
 
     respond_to do |format|
-      format.html { redirect_to heros_url, notice: "Hero was successfully destroyed." }
+      format.html { redirect_to heros_url, notice: 'Hero was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_hero
-      @hero = Hero.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def hero_params
-      params.require(:hero).permit(:name)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_hero
+    @hero = Hero.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def hero_params
+    params.require(:hero).permit(:name)
+  end
 end

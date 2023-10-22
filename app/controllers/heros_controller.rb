@@ -25,7 +25,7 @@ class HerosController < ApplicationController
 
     respond_to do |format|
       if @hero.save
-        format.html { redirect_to hero_url(@hero), notice: "Hero was successfully created." }
+        format.html { redirect_to heros_url, notice: "Hero was successfully created." }
         format.json { render :show, status: :created, location: @hero }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -38,7 +38,7 @@ class HerosController < ApplicationController
   def update
     respond_to do |format|
       if @hero.update(hero_params)
-        format.html { redirect_to hero_url(@hero), notice: "Hero was successfully updated." }
+        format.html { redirect_to heros_url, notice: "Hero was successfully updated." }
         format.json { render :show, status: :ok, location: @hero }
       else
         format.html { render :edit, status: :unprocessable_entity }
